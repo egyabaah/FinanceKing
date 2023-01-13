@@ -5,6 +5,7 @@ package com.egyabaah.FinanceKing.accounts;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,12 @@ public class AccountService {
 //	// Instance of AccountService to prevent more than one instance running
 //	private static AccountService instance;
 	
+	 private final AccountRepository accountRepo;
+	
 	// Constructor
-	public AccountService() {
+	@Autowired
+	public AccountService(AccountRepository accountRepo) {
+		this.accountRepo = accountRepo;
 		
 	}
 	
@@ -52,7 +57,8 @@ public class AccountService {
 	}
 	
 	private String addAccount(Account account) {
-		// Add to database
+		// Add account to database
+		accountRepo.save(account);
 		//Return success
 		return "success";
 	}
@@ -83,16 +89,20 @@ public class AccountService {
 	
 	private String removeAccount(Account account) {
 		// Add to database
+		accountRepo.delete(account);
 		//Return success
 		return "success";
 	}
 	
 	public List<Account> getAccounts() {
-		return List.of(
-			new Account("Daddy", 20),
-			new Account("France", 23),
-			new Account("Hamburg", Integer.parseInt("30"))
-		);
+//		return List.of(
+//			new Account("Daddy", 20),
+//			new Account("France", 23),
+//			new Account("Hamburg", Integer.parseInt("30"))
+//		);
+		addAccount(new Account("Daddy", 20));
+		addAccount(new Account("France", 23));
+		return accountRepo.findAll();
 	}
 
 	/**
