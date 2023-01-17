@@ -1,6 +1,7 @@
 package com.egyabaah.FinanceKing.accounts;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table
@@ -37,6 +39,7 @@ public class Account implements Comparable<Account> {
 	// Credit score of a customer
 	private Double creditScore;
 	// Customer's age
+	@Transient
 	private Integer age;
 	// Customer's email
 	private String email;
@@ -49,20 +52,19 @@ public class Account implements Comparable<Account> {
 	}
 	
 	// Temp constructor
-	public Account(String firstName, Integer age) {
+	public Account(String firstName, Double creditScore) {
 		this.firstName = firstName;
-		this.age = age;
+		this.creditScore = creditScore;
 	}
 
 	// Constructor
 	public Account(String firstName, String middleName, String lastName, LocalDate dob, Double creditScore,
-			Integer age, String email, String password) {
+			String email, String password) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.dob = dob;
 		this.creditScore = creditScore;
-		this.age = age;
 		this.email = email;
 		this.password = password;
 	}
@@ -109,7 +111,7 @@ public class Account implements Comparable<Account> {
 	}
 	
 	public Integer getAge() {
-		return age;
+		return Period.between(this.dob, LocalDate.now()).getYears();
 	}
 	
 	public void setAge(Integer age) {
