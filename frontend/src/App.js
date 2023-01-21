@@ -1,7 +1,17 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [accounts, setAccounts] = useState([]);
+  async function hi() {
+    const response = await fetch('api/v1/account');
+    const body = await response.json();
+    setAccounts(body);
+
+  }
+  hi();
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +28,12 @@ function App() {
           Learn React
         </a>
       </header>
+      <h2>accounts</h2>
+      {accounts.map(account =>
+          <div key={account.id}>
+            <h2>{account.firstName} ({account.email})</h2>
+          </div>
+      )}
     </div>
   );
 }
