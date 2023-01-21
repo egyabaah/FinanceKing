@@ -130,8 +130,8 @@ public class AccountService {
 	/**
 	 * 
 	 * Sets the password of the given account email
-	 * @param account - 
-	 * @param email - 
+	 * @param account - account to change email
+	 * @param email - New email
 	 * @return
 	 */
 	public String changeEmail(Account account, String email) {
