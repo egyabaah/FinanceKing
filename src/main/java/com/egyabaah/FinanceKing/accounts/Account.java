@@ -69,6 +69,16 @@ public class Account implements Comparable<Account> {
 		this.password = password;
 	}
 	
+	public Account(String firstName, String lastName, LocalDate dob, Double creditScore,
+			String email, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dob = dob;
+		this.creditScore = creditScore;
+		this.email = email;
+		this.password = password;
+	}
+	
 	// Getters and Setters
 	public String getFirstName() {
 		return firstName;
