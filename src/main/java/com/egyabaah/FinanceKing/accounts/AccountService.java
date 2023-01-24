@@ -193,9 +193,9 @@ public class AccountService {
 //			new Account("France", 23),
 //			new Account("Hamburg", Integer.parseInt("30"))
 //		);
-		addAccount(new Account("Daddy", 20.0));
-		addAccount(new Account("France", 89.9));
-		addAccount(new Account("Name", 45.7));
+//		addAccount(new Account("Daddy", 20.0));
+//		addAccount(new Account("France", 89.9));
+//		addAccount(new Account("UK", 45.7));
 		return accountRepo.findAll();
 	}
 

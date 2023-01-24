@@ -1,0 +1,98 @@
+.register-body {
+  background-color: #EFEEEE;
+  min-height: 100vh;
+  font-family: 'Arial';
+  font-style: normal;
+}
+
+.register-form{
+  margin-left: 19%;
+  margin-right: 19%;
+}
+
+.individual-field{
+  align-items: center;
+  border: 0;
+}
+
+fieldset input{
+  width: 200px;
+  height: 28px;
+  border: 1.5px solid #E17829;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.label-text{
+  display: inline-block;
+  width: 140px;
+  height: 45;
+  font-style: normal;
+  font-family: 'Arial';
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 28px;
+  text-align: center;
+}
+.submitbtn-div{
+  background-color: aqua;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.submitbtn {
+  width: 210px;
+  height: 35px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  background: #E17829;
+  color: white;
+  border-radius: 2px;
+  border: #E17829;
+  display: flex;
+  /* align-items: center; */
+  align-content: center;
+}
+
+
+#required {
+  color: #E17829;
+}
+
+@media  screen and (max-width: 654px) {
+  .individual-field {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+  }
+  .inner-fieldset{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 745px) {
+  fieldset label{
+    width: 170px; 
+    text-align: center;
+  }
+  .submitbtn {
+    width: 170px;
+  }
+}
+
+@media screen and (min-width: 745px) {
+  .inner-fieldset{
+    display: flex;
+  }
+  fieldset label:nth-of-type(1){
+    margin-right: 5%;
+  
+  }
+}
