@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import '../css/Register.css';
 import AccountService from "../services/accountService";
 import { useNavigate } from "react-router-dom";
@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
- const [firstName, setFirstName] = useState();
- const [lastName, setLastName] = useState();
- const [middleName, setMiddleName] = useState();
- const [email, setEmail] = useState();
- const [phone, setPhone] = useState();
- const [dob, setDob] = useState();
- const [password, setPassword] = useState();
- const [rePassword, setRePassword] = useState();
+ const [firstName, setFirstName] = useState("");
+ const [lastName, setLastName] = useState("");
+ const [middleName, setMiddleName] = useState("");
+ const [email, setEmail] = useState("");
+ const [phone, setPhone] = useState("");
+ const [dob, setDob] = useState("");
+ const [password, setPassword] = useState("");
+ const [rePassword, setRePassword] = useState("");
 
  function firstNameHandler(event){
   ;
@@ -21,12 +21,25 @@ const Register = () => {
 
  const navigate = useNavigate();
 
- async function handleSubmit(){
-  let response = await AccountService.create({firstName: firstName, age: 50});
-  let gh = response.data;
-  // alert(gh);
-  return navigate("/");
-  
+ useEffect(()=>
+ {
+
+ }, [middleName])
+
+ // Function to handle form on submission; e is a virtual param
+ async function handleSubmit(e){
+  // Prevents default behavior of form on submit
+  e.preventDefault();
+  // Sends form data to backend to create an account; This is just a test but not final implementation
+  let response = await AccountService.create({firstName: middleName.trim(), age: 50, pj: "klk"});
+  // Response from server/ backend
+  let message = await response.data;
+  // Redirects to homepage with message receive from server
+  navigate("/", {
+   state: {
+    message: message
+   }
+  });
  }
  return(
   <div className="register-body">
