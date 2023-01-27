@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;500;600;700&display=swap');
+
+body {
+ margin: 0;
+ padding: 0;
+ font-family: 'Arial', sans-serif;
+ background-color: #fcfcfc;
+}
+
+.container {
+ max-width: 1100px;
+ margin: 0 auto;
+ padding: 0 15px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ height: 100%;
+}
+
+.navbar {
+ height: 50px;
+ background-color: #E17829;
+ position: relative;
+}
+
+ .logo {
+  /* position: fixed; */
+  position: relative;
+  margin-top: .5em;
+  /* width: 20%; */
+ }
+
+.nav-elements {
+ /* width: 60%; */
+}
+
+.nav-elements ul {
+ display: flex;
+ justify-content: space-between;
+ list-style-type: none;
+ justify-content: center;
+ align-items: center;
+ align-content: center;
+ text-align: center;
+}
+
+ul{
+ margin-top: .5em;
+}
+
+.nav-elements ul li:not(:last-child) {
+ margin-right: 30px;
+}
+
+.nav-elements ul a {
+ font-size: 16px;
+ font-weight: 700;
+ color: #ffffff;
+ text-decoration: none;
+}
+
+
+
+.nav-elements ul a.active {
+ color: #E17829;
+ font-weight: bold;
+ position: relative;
+ background-color: #ffffff;
+ height: 900px;
+ padding: 10px;
+}
+
+.nav-elements ul a.active::after{
+ content: '';
+ position: absolute;
+ bottom: -4px;
+ left: 0;
+ width: 100%;
+ height: 2px;
+ background-color: #574c4c;
+}
+
+.nav-elements a:hover {
+ bottom: -4px;
+ left: 0;
+ padding-bottom: 4px;
+ border-bottom: 3px solid #574c4c;
+}
+
+.menu-icon {
+ visibility: hidden;
+}
+
+
+@media (max-width: 768px) {
+ .nav-elements ul li:not(:last-child) {
+  margin-right: 10px;
+ }
+}
+
+@media (max-width: 653.9px) {
+ .menu-icon {
+  display: block;
+  cursor: pointer;
+  visibility: visible;
+ }
+
+.icon-class {
+ color: "white";
+ size:  30em
+}
+
+ .nav-elements {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  background-color: #E17829;
+  width: 0px;
+  height: calc(100vh - 60px);
+  transition: all 0.3s ease-in;
+  overflow: hidden;
+ }
+
+ .nav-elements.active {
+  width: 270px;
+  /* height: 100%; */
+ }
+
+ .nav-elements ul {
+  display: flex;
+  flex-direction: column;
+ }
+
+ .nav-elements ul li {
+  margin-right: unset;
+  margin-top: 22px;
+ }
+}
