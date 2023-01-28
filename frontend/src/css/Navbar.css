@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;500;600;700&display=swap'); */
 
 body {
  margin: 0;
@@ -22,11 +22,22 @@ body {
  background-color: #E17829;
  position: relative;
 }
+/* img{
+ width: 250px;
+ height: 150px;
+ position: absolute;
+ padding: 0px 0px;
+ margin: 0px 0px;
+} */
 
  .logo {
+  /* position:sticky; */
   /* position: fixed; */
-  position: relative;
-  margin-top: .5em;
+  position: absolute;
+  /* top: 0; */
+  /* left: 0; */
+  margin-top: .2em;
+
   /* width: 20%; */
  }
 
@@ -45,7 +56,7 @@ body {
 }
 
 ul{
- margin-top: .5em;
+ margin-top: .3em;
 }
 
 .nav-elements ul li:not(:last-child) {
@@ -66,8 +77,8 @@ ul{
  font-weight: bold;
  position: relative;
  background-color: #ffffff;
- height: 900px;
- padding: 10px;
+ height: 800px;
+ padding: 8px;
 }
 
 .nav-elements ul a.active::after{
@@ -83,6 +94,7 @@ ul{
 .nav-elements a:hover {
  bottom: -4px;
  left: 0;
+ /* position: absolute; */
  padding-bottom: 4px;
  border-bottom: 3px solid #574c4c;
 }
@@ -103,12 +115,13 @@ ul{
   display: block;
   cursor: pointer;
   visibility: visible;
+  align-content: flex-end;
+  justify-self: flex-end;
+  align-self: flex-end;
+  /* left: 50px; */
+  right: 5px;
+  position: absolute;
  }
-
-.icon-class {
- color: "white";
- size:  30em
-}
 
  .nav-elements {
   position: absolute;
@@ -123,6 +136,7 @@ ul{
 
  .nav-elements.active {
   width: 270px;
+  z-index: 2;
   /* height: 100%; */
  }
 

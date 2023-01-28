@@ -3,11 +3,11 @@
   min-height: 100vh;
   font-family: 'Arial';
   font-style: normal;
-    align-items: center;
-      justify-content: center;
-      vertical-align: middle;
-      display: table-cell;
-      display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  display: table-cell;
+  display: flex;
 }
 
 .register-form{

@@ -6,6 +6,7 @@ import Home  from './Home';
 import { Books } from './pages/books';
 import Register from './pages/Register';
 import Navbar from './components/Navbar';
+import SignIn from './pages/SignIn';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -16,6 +17,7 @@ const App = () => {
     <Route path="/" element={<Home />}  />
     <Route path="/books" element={<Books />} />
     <Route path="/register" element={<Register />} />
+    <Route path="/signin" element={<SignIn />} />
   </Routes>
     </>
   )

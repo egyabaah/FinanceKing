@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import '../css/Navbar.css';
 import { HiMenuAlt3 as Hamburger} from "react-icons/hi" ;
 import { HiX } from "react-icons/hi";
+// import { ReactComponent as Brand } from "../images/logo1.png";
 // HiMenuAlt3
 
 export default function Navbar(props) {
@@ -17,7 +18,10 @@ export default function Navbar(props) {
   <nav className="navbar">
    <div className="container">
     <div className="logo">
-     <h5>FINANCE</h5>
+     {/* <h5>FINANCE</h5> */}
+     {/* <Brand /> */}
+      <NavLink onClick={()=>setShowNavbar(false)} to="/"><img className="" src={ require("../images/logo.png") } alt="Logo" height="45px" width="150px" /></NavLink>
+      {/* <img className="" src={ require("../images/logo.png") } alt="Logo" height="45px" width="150px" /> */}
     </div>
     <div className="menu-icon" onClick={toggleNavItems}>
      {!showNavbar ? <Hamburger
