@@ -3,6 +3,8 @@ package com.egyabaah.FinanceKing.accounts;
 import java.time.LocalDate;
 import java.time.Period;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,6 +37,7 @@ public class Account implements Comparable<Account> {
 	// LastName of a customer
 	private String lastName;
 	// Date of birth of a customer
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private LocalDate dob;
 	// Credit score of a customer
 	private Double creditScore;
@@ -43,6 +46,8 @@ public class Account implements Comparable<Account> {
 	private Integer age;
 	// Customer's email
 	private String email;
+	// Customer's phone number
+	private String phone;
 	// Customer's password
 	private String password;
 	
@@ -78,6 +83,29 @@ public class Account implements Comparable<Account> {
 		this.email = email;
 		this.password = password;
 	}
+	
+	public Account(String firstName, String lastName, LocalDate dob, String email, String phone, String password) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+//		String[] dobList = dob.split("-");
+//		this.dob = LocalDate.of(Integer.parseInt(dobList[2]), Integer.parseInt(dobList[1]), Integer.parseInt(dobList[0]));
+		this.dob = dob;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+	}
+	public Account(String firstName, String lastName, LocalDate dob, String email, String phone, String password, String middleName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+//		String[] dobList = dob.split("-");
+//		this.dob = LocalDate.of(Integer.parseInt(dobList[2]), Integer.parseInt(dobList[1]), Integer.parseInt(dobList[0]));
+		this.dob = dob;
+		this.email = email;
+		this.phone = phone;
+		this.password = password;
+	}
+	
 	
 	// Getters and Setters
 	public String getFirstName() {
