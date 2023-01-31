@@ -17,13 +17,13 @@ export default function SignIn () {
        <img className="" src={ require("../images/logo.png") } alt="Logo" height="45px" width="150px" />
       </div>
       <div className="individual-field-signin">
-       <input type="email" value={email} onChange={(event)=>setEmail(event.target.value)} placeholder="Enter your email address" autoComplete="false" id="email"/>
-       <label for="email">Email address</label>
+       <input type="email" value={email} onChange={(event)=>setEmail(event.target.value)} placeholder="Enter your email address" autoComplete="false" id="email" className=""/>
+       <label htmlFor="email">Email address</label>
       </div>
       <div className="individual-field-signin">
 
        <input type="password" value={password} onChange={(event)=>setPassword(event.target.value)} placeholder="Enter your password" autoComplete="false" id="password"/>
-       <label for="password">Password</label>
+       <label htmlFor="password">Password</label>
       </div>
       <div className="password-reset">
        <a href="/" className="">Forgot password?</a>

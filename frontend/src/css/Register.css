@@ -101,4 +101,14 @@ fieldset input{
   .submitbtn-div{
     margin-top: 20px;
   }
+  .phone-requirement-text{
+    visibility: hidden;
+    content: "";
+  }
+}
+
+.requirement-text{
+  margin-top: -20px;
+  color: red;
+  font-size: 13px;
 }

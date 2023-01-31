@@ -26,7 +26,7 @@
   color: #E17829;
   padding-bottom: 15px;
   height: 100%;
-  transform: translateY(10px);
+  transform: translateY(20px);
   line-height: 6px;
   transition: all ease-out 0.1s;
   font-size: 16px;
@@ -51,6 +51,7 @@
   background-color: #fafafa;
   border: 1px solid #E17829;
   border-radius: 5px;
+  /* placehol */
 }
 .password-reset a{
   color: #E17829;
@@ -97,8 +98,10 @@
   border-width: 2.3px;
 }
 
-.signin-body input::placeholder{
- visibility: hidden;
+.signin-body input::placeholder, input::-moz-placeholder, input:-moz-placeholder{
+  visibility: hidden;
+  color: white;
+
 }
 .signin-body input:focus {
  border-width: 3px;
@@ -132,6 +135,9 @@
    border: 0.0625rem solid rgb(224, 228, 232);
    padding: 2.5rem; */
  }
+ .container {
+  /* margin-top: 3rem; */
+ }
 }
 
 .divider{
@@ -163,4 +169,10 @@ justify-content: center;
 align-items: center;
 margin-top: 3rem;
 z-index: 1;
+}
+
+@media screen and (min-height: 780px) and (max-width: 653px) {
+  .signin-body .container{
+    margin-top: -3rem;
+  }
 }
