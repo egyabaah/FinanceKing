@@ -36,23 +36,23 @@ export default function Navbar(props) {
     </div>
     <div className={`nav-elements  ${showNavbar && 'active'}`}>
      <ul>
-      <li>
+      <li key="1">
        <NavLink onClick={()=>setShowNavbar(!showNavbar)} to="/">HOME</NavLink>
       </li>
-      <li>
+      <li key="2">
        <NavLink onClick={()=>setShowNavbar(!showNavbar)} to="/about">ABOUT US</NavLink>
       </li>
-      <li>
+      <li key="3">
        <NavLink onClick={()=>setShowNavbar(!showNavbar)} to="/contact">CONTACT US</NavLink>
       </li>
       {isLoggedIn? 
-       [<li>
+       [<li key="4">
         <NavLink onClick={()=>setShowNavbar(!showNavbar)} to="/register">SIGN UP</NavLink>
          </li>,
-        <li>
+        <li key="5">
          <NavLink onClick={()=>setShowNavbar(!showNavbar)} to ="/signin">SIGN IN</NavLink>
          </li>]
-       : <li><NavLink onClick={()=>setShowNavbar(!showNavbar)}></NavLink></li>}
+       : <li key="6"><NavLink onClick={()=>setShowNavbar(!showNavbar)}></NavLink></li>}
       {/* {isLoggedIn? 
        [<li><NavLink to="/register">SIGN UP</NavLink></li>,
        <li><NavLink to="/register">SIGN UP</NavLink></li>]:<h1>Hello</h1>} */}
