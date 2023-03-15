@@ -22,7 +22,7 @@ function Home() {
  }
  return (
   <>
-  <h1>Hello, Home</h1>
+  {/* <h1>Hello, Home</h1>
   <h1>Hello, Home</h1>
   {jsonob1 ? jsonob1.map((account)=>{
    if(account != undefined){
@@ -30,7 +30,8 @@ function Home() {
     return <button type="button" key={account.id} onClick={mmn}>{account.firstName}</button>
     // <h1 key={account.id}>{account.firstName}</h1>
    }
-  }): null}
+  }): null} */}
+  <img src={require("../src/images/main.jpeg")}/>
   </>
  )
 }

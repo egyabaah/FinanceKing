@@ -4,10 +4,19 @@
 package com.egyabaah.FinanceKing.accounts;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.egyabaah.FinanceKing.roles.Role;
+import com.egyabaah.FinanceKing.roles.Roles;
+
 
 /**
  * @author Emmanuel Gyabaah
@@ -59,20 +68,20 @@ public class AccountService {
 	 * @return List<Account> - List of all accounts with same first and last names as given, 
 	 * else null 
 	 */
-	public List<Account> getAccountByFullName(String firstName, String lastName) {
-		return accountRepo.findByFullName(firstName, lastName);
-	}
-	
-	/**
-	 * Return accounts with same first name, middle name and last name as given, else null
-	 * @param firstName
-	 * @param lastName
-	 * @return List<Account> - List of all accounts with same first, middle and last names as given, 
-	 * else null 
-	 */
-	public List<Account> getAccountByFullName(String firstName, String middleName, String lastName) {
-		return accountRepo.findByFullName(firstName, middleName, lastName);
-	}
+//	public List<Account> getAccountByFullName(String firstName, String lastName) {
+//		return accountRepo.findByFullName(firstName, lastName);
+//	}
+//	
+//	/**
+//	 * Return accounts with same first name, middle name and last name as given, else null
+//	 * @param firstName
+//	 * @param lastName
+//	 * @return List<Account> - List of all accounts with same first, middle and last names as given, 
+//	 * else null 
+//	 */
+//	public List<Account> getAccountByFullName(String firstName, String middleName, String lastName) {
+//		return accountRepo.findByFullName(firstName, middleName, lastName);
+//	}
 	
 	/**
 	 * Returns an account from database with same phone number as phone
@@ -89,11 +98,26 @@ public class AccountService {
 	 * @return
 	 */
 	public String addAccount(Account account) {
-		if (account != null) {			
+		if (account == null) {			
+			return "No data";
+		}
+		else if (accountRepo.findByEmail(account.getEmail()).isPresent()) {
+			return "Duplicate email";
+		}
+		else if (accountRepo.findByPhone(account.getPhone()).isPresent()) {
+			return "Duplicate phone";
+		}
+		else {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			account.setPassword(encoder.encode(account.getPassword()));
+			String memberRole = Role.ROLE_USER.toString();
+			Set<String> roles = new HashSet<>();
+			roles.add(memberRole);
+			System.out.println(Arrays.toString(roles.toArray()));
+			account.setRoles(roles);
 			accountRepo.save(account);
 			return "success";
 		}
-		return "error";
 	}
 	
 	/**

@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping(path = "api/v1/account")
+@RequestMapping(path = "api/v1/auth/account")
 @CrossOrigin(origins="http://localhost:3000")
-public class AccountController {
+public class RegisterController {
 	
 	private final AccountService accountService;
 	
 	@Autowired
-	public AccountController(AccountService accountService) {
+	public RegisterController(AccountService accountService) {
 		this.accountService = accountService;
 	}
 	
