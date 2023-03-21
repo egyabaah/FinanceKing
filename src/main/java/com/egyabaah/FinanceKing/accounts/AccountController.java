@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(path = "api/v1/account")
-@CrossOrigin(origins="http://localhost:3000")
+//@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="*")
 public class AccountController {
 	
 	private final AccountService accountService;
@@ -36,7 +37,7 @@ public class AccountController {
 	@PostMapping("")
 	public ResponseEntity<String> registerNewAccount(@RequestBody Account account) {
 		String result = accountService.addAccount(account);
-		  return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 }

@@ -46,13 +46,13 @@ public class SecurityConfig {
   private final AuthenticationProvider authenticationProvider;
   private final LogoutHandler logoutHandler;
   
-  @Autowired
-  public SecurityConfig(JwtAuthFilter jwtAuthFilter, 
-		  AuthenticationProvider authenticationProvider, LogoutHandler logoutHandler) {
-	  this.jwtAuthFilter = jwtAuthFilter;
-	  this.authenticationProvider = authenticationProvider;
-	  this.logoutHandler = logoutHandler;
-  }
+//  @Autowired
+//  public SecurityConfig(JwtAuthFilter jwtAuthFilter,
+//		  AuthenticationProvider authenticationProvider, LogoutHandler logoutHandler) {
+//	  this.jwtAuthFilter = jwtAuthFilter;
+//	  this.authenticationProvider = authenticationProvider;
+//	  this.logoutHandler = logoutHandler;
+//  }
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

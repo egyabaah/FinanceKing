@@ -5,12 +5,16 @@ class AccountService {
     return http.get("/account");
   }
 
+ logIn(data) {
+    return http.post("account/authenticate", data);
+  }
+
   get(id) {
     return http.get(`/account/${id}`);
   }
 
   create(data) {
-    return http.post("/account", data);
+    return http.post("account/register", data);
   }
 
   update(id, data) {

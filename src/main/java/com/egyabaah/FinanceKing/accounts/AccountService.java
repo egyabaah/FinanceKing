@@ -116,6 +116,7 @@ public class AccountService {
 			System.out.println(Arrays.toString(roles.toArray()));
 			account.setRoles(roles);
 			accountRepo.save(account);
+			System.out.println("////////////\n" + account.toString() + "\n////////");
 			return "success";
 		}
 	}

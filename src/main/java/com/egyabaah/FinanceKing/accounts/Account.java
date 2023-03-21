@@ -34,6 +34,7 @@ import com.egyabaah.FinanceKing.roles.Roles;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,12 +45,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 				@UniqueConstraint(columnNames = "email"),
 				@UniqueConstraint(columnNames = "phone")
 		})
+//@Builder
 public class Account implements Comparable<Account>, UserDetails {
 
 	// Fields
 	
 	// Customer id
-	@Id
 //	@SequenceGenerator(
 //			name = "account_sequence",
 //			sequenceName = "account_sequence",
@@ -58,6 +59,7 @@ public class Account implements Comparable<Account>, UserDetails {
 //			strategy = GenerationType.SEQUENCE,
 //			generator = "account_sequence"
 //			)
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	// FirstName of a customer
@@ -287,31 +289,31 @@ public class Account implements Comparable<Account>, UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return null;
+		return email;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
 	
