@@ -17,25 +17,25 @@
 // *
 // */
 //@RestController
-//@RequestMapping(path = "api/v1/auth/account")
+//@RequestMapping(path = "api/v1/auth/user")
 //@CrossOrigin(origins="http://localhost:3000")
 //public class RegisterController {
 //
-//	private final AccountService accountService;
+//	private final UserService accountService;
 //
 //	@Autowired
-//	public RegisterController(AccountService accountService) {
+//	public RegisterController(UserService accountService) {
 //		this.accountService = accountService;
 //	}
 //
 //	@GetMapping("")
-//	public List<Account> getAccounts() {
+//	public List<User> getAccounts() {
 //		return accountService.getAccounts();
 //	}
 //
 //	@PostMapping("")
-//	public ResponseEntity<String> registerNewAccount(@RequestBody Account account) {
-//		String result = accountService.addAccount(account);
+//	public ResponseEntity<String> registerNewAccount(@RequestBody User user) {
+//		String result = accountService.addAccount(user);
 //		  return new ResponseEntity<>(result, HttpStatus.OK);
 //	}
 //

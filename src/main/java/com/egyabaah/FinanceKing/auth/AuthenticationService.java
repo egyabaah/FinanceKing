@@ -1,24 +1,20 @@
 package com.egyabaah.FinanceKing.auth;
 
 
+import com.egyabaah.FinanceKing.accounts.User;
+import com.egyabaah.FinanceKing.accounts.UserRepository;
 import com.egyabaah.FinanceKing.token.Token;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.CachingUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
-import com.egyabaah.FinanceKing.accounts.Account;
-import com.egyabaah.FinanceKing.accounts.AccountRepository;
 import com.egyabaah.FinanceKing.config.JwtService;
 import com.egyabaah.FinanceKing.token.TokenRepository;
 import com.egyabaah.FinanceKing.token.TokenType;
@@ -30,7 +26,7 @@ import com.egyabaah.FinanceKing.token.TokenType;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-  private final AccountRepository accountRepo;
+  private final UserRepository accountRepo;
   private final TokenRepository tokenRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
@@ -39,7 +35,7 @@ public class AuthenticationService {
 
 
 //public AuthenticationResponse register(RegisterRequest request) {
-////    var user = Account.builder()
+////    var user = User.builder()
 ////        .firstname(request.getFirstname())
 ////        .lastname(request.getLastname())
 ////        .email(request.getEmail())
@@ -97,7 +93,7 @@ public class AuthenticationService {
               .orElse(false);
       System.out.println(authHeader);
       if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
-        Account user = accountRepo.findByEmail(userEmail).get();
+        User user = accountRepo.findByEmail(userEmail).get();
 
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(user, jwtToken);
@@ -111,9 +107,9 @@ public class AuthenticationService {
 
   }
 
-  private void saveUserToken(Account account, String jwtToken) {
+  private void saveUserToken(User user, String jwtToken) {
     var token = Token.builder()
-        .account(account)
+        .user(user)
         .token(jwtToken)
         .tokenType(TokenType.BEARER)
         .expired(false)
@@ -122,8 +118,8 @@ public class AuthenticationService {
     tokenRepository.save(token);
   }
 
-  private void revokeAllUserTokens(Account account) {
-    var validUserTokens = tokenRepository.findAllValidTokenByAccount(account.getId());
+  private void revokeAllUserTokens(User user) {
+    var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
     if (validUserTokens.isEmpty())
       return;
     validUserTokens.forEach(token -> {

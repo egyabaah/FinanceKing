@@ -17,26 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RestController
-@RequestMapping(path = "api/v1/account")
+@RequestMapping(path = "api/v1/user")
 //@CrossOrigin(origins="http://localhost:3000")
 @CrossOrigin(origins="*")
-public class AccountController {
+public class UserController {
 	
-	private final AccountService accountService;
+	private final UserService userService;
 	
 	@Autowired
-	public AccountController(AccountService accountService) {
-		this.accountService = accountService;
+	public UserController(UserService userService) {
+		this.userService = userService;
 	}
 	
 	@GetMapping("")
-	public List<Account> getAccounts() {
-		return accountService.getAccounts();
+	public List<User> getAccounts() {
+		return userService.getAccounts();
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<String> registerNewAccount(@RequestBody Account account) {
-		String result = accountService.addAccount(account);
+	public ResponseEntity<String> registerNewAccount(@RequestBody User user) {
+		String result = userService.addAccount(user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

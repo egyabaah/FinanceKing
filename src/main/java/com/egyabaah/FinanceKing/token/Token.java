@@ -3,7 +3,7 @@
  */
 package com.egyabaah.FinanceKing.token;
 
-import com.egyabaah.FinanceKing.accounts.Account;
+import com.egyabaah.FinanceKing.accounts.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,8 +37,8 @@ public class Token {
   public boolean expired;
 
   @ManyToOne
-  @JoinColumn(name = "accounts_id")
-  public Account account;
+  @JoinColumn(name = "users_id")
+  public User user;
 public Long getId() {
 	return id;
 }
@@ -79,12 +79,12 @@ public void setExpired(boolean expired) {
 	this.expired = expired;
 }
 
-public Account getAccount() {
-	return account;
+public User getUser() {
+	return user;
 }
 
-public void setAccount(Account account) {
-	this.account = account;
+public void setUser(User user) {
+	this.user = user;
 }
   
   

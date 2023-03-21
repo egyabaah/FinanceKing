@@ -1,7 +1,7 @@
 package com.egyabaah.FinanceKing.auth;
 
-import com.egyabaah.FinanceKing.accounts.Account;
-import com.egyabaah.FinanceKing.accounts.AccountService;
+import com.egyabaah.FinanceKing.accounts.User;
+import com.egyabaah.FinanceKing.accounts.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/v1/auth/account")
+@RequestMapping("/api/v1/auth/user")
 //@CrossOrigin(origins="http://localhost:3000")
 @CrossOrigin(origins = "*")
 @RequiredArgsConstructor
@@ -24,15 +24,15 @@ public class AuthenticationController {
 
   private final AuthenticationService service;
 
-  private final AccountService accountService;
+  private final UserService userService;
   
 
 
 @PostMapping("/register")
   public ResponseEntity<String> register(
-      @RequestBody Account account
+      @RequestBody User user
   ) {
-    String result = accountService.addAccount(account);
+    String result = userService.addAccount(user);
     return new ResponseEntity<>(result, HttpStatus.OK);
   }
   @PostMapping("/authenticate")

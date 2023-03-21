@@ -3,7 +3,6 @@ package com.egyabaah.FinanceKing.accounts;
 import java.time.LocalDate;
 
 
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,40 +12,29 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
-
-import com.egyabaah.FinanceKing.roles.Role;
-import com.egyabaah.FinanceKing.roles.Roles; 
 
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "accounts", 
+@Table(name = "users",
 		uniqueConstraints = {
 				@UniqueConstraint(columnNames = "email"),
 				@UniqueConstraint(columnNames = "phone")
 		})
 //@Builder
-public class Account implements Comparable<Account>, UserDetails {
+public class User implements Comparable<User>, UserDetails {
 
 	// Fields
 	
@@ -96,19 +84,19 @@ public class Account implements Comparable<Account>, UserDetails {
 	private Set<String> roles = new HashSet<>();
 	
 	// Empty Constructor
-	public Account() {
+	public User() {
 		
 	}
 	
 	// Temp constructor
-	public Account(String firstName, Double creditScore) {
+	public User(String firstName, Double creditScore) {
 		this.firstName = firstName;
 		this.creditScore = creditScore;
 	}
 
 	// Constructor
-	public Account(String firstName, String middleName, String lastName, LocalDate dob, Double creditScore,
-			String email, String password) {
+	public User(String firstName, String middleName, String lastName, LocalDate dob, Double creditScore,
+				String email, String password) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -118,8 +106,8 @@ public class Account implements Comparable<Account>, UserDetails {
 		this.password = password;
 	}
 	
-	public Account(String firstName, String lastName, LocalDate dob, Double creditScore,
-			String email, String password) {
+	public User(String firstName, String lastName, LocalDate dob, Double creditScore,
+				String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dob = dob;
@@ -128,7 +116,7 @@ public class Account implements Comparable<Account>, UserDetails {
 		this.password = password;
 	}
 	
-	public Account(String firstName, String lastName, LocalDate dob, String email, String phone, String password) {
+	public User(String firstName, String lastName, LocalDate dob, String email, String phone, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 //		String[] dobList = dob.split("-");
@@ -138,7 +126,7 @@ public class Account implements Comparable<Account>, UserDetails {
 		this.phone = phone;
 		this.password = password;
 	}
-	public Account(String firstName, String lastName, LocalDate dob, String email, String phone, String password, String middleName) {
+	public User(String firstName, String lastName, LocalDate dob, String email, String phone, String password, String middleName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.middleName = middleName;
@@ -258,7 +246,7 @@ public class Account implements Comparable<Account>, UserDetails {
 	 * Compares Customer Accounts Using creditScores then customerId
 	 * @param o - CustomerAccount to compare to this 
 	 */
-	public int compareTo(Account o) {
+	public int compareTo(User o) {
 		// Return 0 if any of the required fields is missing
 		if (this == null || o == null || this.id == null || o.id == null ||this.getCreditScore() == null 
 				|| o.getCreditScore() == null) {			
