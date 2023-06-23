@@ -1,4 +1,4 @@
-package com.egyabaah.FinanceKing.accounts;
+package com.egyabaah.FinanceKing.user;
 
 import java.util.List;
 
@@ -31,12 +31,12 @@ public class UserController {
 	
 	@GetMapping("")
 	public List<User> getAccounts() {
-		return userService.getAccounts();
+		return userService.getUsers();
 	}
 	
 	@PostMapping("")
 	public ResponseEntity<String> registerNewAccount(@RequestBody User user) {
-		String result = userService.addAccount(user);
+		String result = userService.addUser(user);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

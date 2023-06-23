@@ -1,31 +1,31 @@
-package com.egyabaah.FinanceKing.accounts;
+package com.egyabaah.FinanceKing.user;
 
 import java.time.LocalDate;
 
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.egyabaah.FinanceKing.accounts.Account;
+import com.egyabaah.FinanceKing.roles.Role;
+import com.egyabaah.FinanceKing.roles.Roles;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(name = "users",
@@ -37,16 +37,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements Comparable<User>, UserDetails {
 
 	// Fields
-	
-	// Customer id
-//	@SequenceGenerator(
-//			name = "account_sequence",
-//			sequenceName = "account_sequence",
-//			allocationSize = 1)
-//	@GeneratedValue(
-//			strategy = GenerationType.SEQUENCE,
-//			generator = "account_sequence"
-//			)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -57,6 +47,7 @@ public class User implements Comparable<User>, UserDetails {
 	// LastName of a customer
 	private String lastName;
 	// Date of birth of a customer
+	// Json string matching this format will be converted to LocalDate Object
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@NotEmpty
 	private LocalDate dob;
@@ -75,13 +66,14 @@ public class User implements Comparable<User>, UserDetails {
 	// Customer's password
 	@NotEmpty
 	private String password;
-	
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(	name = "account_roles", 
-//				joinColumns = @JoinColumn(name = "account_id"), 
-//				inverseJoinColumns = @JoinColumn(name = "role_id"))
-//	@Enumerated(EnumType.STRING)
-	private Set<String> roles = new HashSet<>();
+	@OneToMany
+	@JoinColumn(name="user_id", referencedColumnName="id")
+	public List<Account> accounts;
+	// A set of Roles of a user
+	@Enumerated(EnumType.STRING)
+	private Set<Role> roles = new HashSet<>();
+
+	private boolean isVerified;
 	
 	// Empty Constructor
 	public User() {
@@ -94,44 +86,20 @@ public class User implements Comparable<User>, UserDetails {
 		this.creditScore = creditScore;
 	}
 
-	// Constructor
-	public User(String firstName, String middleName, String lastName, LocalDate dob, Double creditScore,
-				String email, String password) {
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.dob = dob;
-		this.creditScore = creditScore;
-		this.email = email;
-		this.password = password;
-	}
-	
-	public User(String firstName, String lastName, LocalDate dob, Double creditScore,
-				String email, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dob = dob;
-		this.creditScore = creditScore;
-		this.email = email;
-		this.password = password;
-	}
-	
+	// Constructor without middle name
 	public User(String firstName, String lastName, LocalDate dob, String email, String phone, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-//		String[] dobList = dob.split("-");
-//		this.dob = LocalDate.of(Integer.parseInt(dobList[2]), Integer.parseInt(dobList[1]), Integer.parseInt(dobList[0]));
 		this.dob = dob;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
 	}
+	// Constructor with middle name
 	public User(String firstName, String lastName, LocalDate dob, String email, String phone, String password, String middleName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.middleName = middleName;
-//		String[] dobList = dob.split("-");
-//		this.dob = LocalDate.of(Integer.parseInt(dobList[2]), Integer.parseInt(dobList[1]), Integer.parseInt(dobList[0]));
 		this.dob = dob;
 		this.email = email;
 		this.phone = phone;
@@ -181,8 +149,8 @@ public class User implements Comparable<User>, UserDetails {
 	}
 	
 	public Integer getAge() {
-//		return Period.between(this.dob, LocalDate.now()).getYears();
-		return 10;
+		return Period.between(this.dob, LocalDate.now()).getYears();
+//		return 10;
 	}
 	
 	public void setAge(Integer age) {
@@ -208,10 +176,10 @@ public class User implements Comparable<User>, UserDetails {
 	public Long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 	
 	public String getPhone() {
@@ -222,24 +190,55 @@ public class User implements Comparable<User>, UserDetails {
 		this.phone = phone;
 	}
 
-	public Set<String> getRoles() {
+
+	public Set<Role> getRoles() {
 		return roles;
 	}
-
-	public void setRoles(Set<String> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-
-	@Override
-	/**
-	 * Returns string form of CustomerAccount
-	 */
-	public String toString() {
-		return "CustomerAccount [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", dob=" + dob + ", creditScore=" + creditScore + ", age=" + age + ", email=" + email + ", password="
-				+ password + ", customerId=" + id + "]";
+	public void addRoles(Role role){
+		this.roles.add(role);
+	}
+	public void removeRoles(Role role){
+		this.roles.remove(role);
 	}
 
+	public List<Account> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
+	}
+
+	public boolean isVerified() {
+		return isVerified;
+	}
+
+	public void setVerified(boolean verified) {
+		isVerified = verified;
+	}
+
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", middleName='" + middleName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", dob=" + dob +
+				", creditScore=" + creditScore +
+				", age=" + age +
+				", email='" + email + '\'' +
+				", phone='" + phone + '\'' +
+				", password='" + password + '\'' +
+				", accounts=" + accounts +
+				", roles=" + roles +
+				", isVerified=" + isVerified +
+				'}';
+	}
 
 	@Override
 	/**
@@ -263,10 +262,12 @@ public class User implements Comparable<User>, UserDetails {
 	}
 
 	@Override
+	@Transactional
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		for (String role: roles) {
+		for (Role role : getRoles()) {
+//			System.out.println(role);
 			// Converts Role to string and add to authorities
 			authorities.add(new SimpleGrantedAuthority(role.toString()));
 			
@@ -303,14 +304,9 @@ public class User implements Comparable<User>, UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
-	
-	
-	
-	
 
 
-	
-	
-	
+
+
+
 }

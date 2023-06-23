@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.egyabaah.FinanceKing.accounts;
+package com.egyabaah.FinanceKing.user;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-	// Find all accounts with the last name as lastName
+	// Find all user with the last name as lastName
 	List<User> findByLastName(String lastName);
-	// Find all accounts with the last name as lastName
+	// Find all user with the last name as lastName
 	List<User> findByFirstName(String firstName);
-	// Find all accounts with  full name as given arguments
+	// Find all user with  full name as given arguments
 //	List<User> findByFullName(String firstName, String lastName);
-//	// Find all accounts with full name as given arguments
+//	// Find all user with full name as given arguments
 //	List<User> findByFullName(String firstName, String middleName, String lastName);
 	// Find an user by it's email
 	Optional<User> findByEmail(String email);
@@ -30,6 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	Optional<User> findByPhone(String phone);
 //	Query("from User u where u.name = :name or u.email = :name"
 //	Optional<User> findByUsername(String username);
+
 //
 
 }

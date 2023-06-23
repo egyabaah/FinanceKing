@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.egyabaah.FinanceKing.accounts;
+package com.egyabaah.FinanceKing.user;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.egyabaah.FinanceKing.roles.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class UserService {
 	 * @param id - Long
 	 * @return User - user with same id as id, else null
 	 */
-	public User getAccountById(Long id) {
+	public User getUserById(Long id) {
 //		if (userRepository.findById(id).isPresent()) {
 //			return userRepository.findById(id).get();
 //		}
@@ -55,29 +56,29 @@ public class UserService {
 	 * @param email
 	 * @return User - user with same email as email, else null
 	 */
-	public User getAccountByEmail(String email) {
+	public User getUserByEmail(String email) {
 		return userRepository.findByEmail(email).get();
 	}
 	
 	/**
-	 * Return accounts with same first name and last name as given, else null
+	 * Return user with same first name and last name as given, else null
 	 * @param firstName
 	 * @param lastName
-	 * @return List<User> - List of all accounts with same first and last names as given,
+	 * @return List<User> - List of all user with same first and last names as given,
 	 * else null 
 	 */
-//	public List<User> getAccountByFullName(String firstName, String lastName) {
+//	public List<User> getUserByFullName(String firstName, String lastName) {
 //		return userRepository.findByFullName(firstName, lastName);
 //	}
 //	
 //	/**
-//	 * Return accounts with same first name, middle name and last name as given, else null
+//	 * Return user with same first name, middle name and last name as given, else null
 //	 * @param firstName
 //	 * @param lastName
-//	 * @return List<User> - List of all accounts with same first, middle and last names as given,
+//	 * @return List<User> - List of all user with same first, middle and last names as given,
 //	 * else null 
 //	 */
-//	public List<User> getAccountByFullName(String firstName, String middleName, String lastName) {
+//	public List<User> getUserByFullName(String firstName, String middleName, String lastName) {
 //		return userRepository.findByFullName(firstName, middleName, lastName);
 //	}
 	
@@ -86,37 +87,37 @@ public class UserService {
 	 * @param phone - String
 	 * @return User - user with same phone number as phone, else null
 	 */
-	public User getAccountByPhoneNumber(String phone) {
+	public User getUserByPhoneNumber(String phone) {
 		return userRepository.findByPhone(phone).get();
 	}
 	
 	/**
 	 * Adds given user to database
+	 * User's email and phone number must be unique
 	 * @param user - User to add to database
-	 * @return
+	 * @return String success if account was created successfully else error message
 	 */
-	public String addAccount(User user) {
+	public String addUser(User user) {
+		// Returns no user data if user is null
 		if (user == null) {
-			return "No data";
+			return "No user data";
 		}
+		// Checks if user email already exists
 		else if (userRepository.findByEmail(user.getEmail()).isPresent()) {
 			return "Duplicate email";
 		}
+		// Checks if user phone number already exists
 		else if (userRepository.findByPhone(user.getPhone()).isPresent()) {
 			return "Duplicate phone";
 		}
-		else {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			user.setPassword(encoder.encode(user.getPassword()));
-			String memberRole = Role.ROLE_USER.toString();
-			Set<String> roles = new HashSet<>();
-			roles.add(memberRole);
-			System.out.println(Arrays.toString(roles.toArray()));
-			user.setRoles(roles);
-			userRepository.save(user);
-			System.out.println("////////////\n" + user.toString() + "\n////////");
-			return "success";
-		}
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		user.setPassword(encoder.encode(user.getPassword()));
+		Role memberRole = Role.ROLE_USER;
+		Set<Role> roles = new HashSet<>();
+		roles.add(memberRole);
+		user.setRoles(roles);
+		userRepository.save(user);
+		return "success";
 	}
 	
 	/**
@@ -142,7 +143,7 @@ public class UserService {
 	 * @return success or error depending on process outcome
 	 */
 	public String resetPassword(String email, String password) {
-		User user = getAccountByEmail(email);
+		User user = getUserByEmail(email);
 		if (user != null) {
 			user.setPassword(password);
 			return "success";
@@ -202,7 +203,7 @@ public class UserService {
 	 * @param user - User to remove
 	 * @return success or error depending on process outcome
 	 */
-	public String removeAccount(User user) {
+	public String removeUser(User user) {
 		if (user != null) {
 			userRepository.delete(user);
 			return "success";
@@ -210,35 +211,11 @@ public class UserService {
 		return "error";
 	}
 	
-	public List<User> getAccounts() {
-//		return List.of(
-//			new User("Daddy", 20),
-//			new User("France", 23),
-//			new User("Hamburg", Integer.parseInt("30"))
-//		);
-//		addAccount(new User("Daddy", 20.0));
-//		addAccount(new User("France", 89.9));
-//		addAccount(new User("UK", 45.7));
+	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
 
-	/**
-	 * Returns an instance of UserService if one already exits, else
-	 * create a new instance of UserService and return it
-	 * @return UserService - an instance of UserService
-	 */
-//	public static UserService getInstance() {
-//		// Initialize an instance of UserService if one doesn't exist
-//		if (UserService.instance == null) {
-//			UserService.setInstance(new UserService());
-//		}
-//		// Returns instance of UserService
-//		return instance;
-//	}
-//
-//	public static void setInstance(UserService instance) {
-//		UserService.instance = instance;
-//	}
+
 	
 	
 }
