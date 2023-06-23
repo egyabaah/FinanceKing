@@ -3,7 +3,7 @@
  */
 package com.egyabaah.FinanceKing.token;
 
-import com.egyabaah.FinanceKing.accounts.User;
+import com.egyabaah.FinanceKing.user.User;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

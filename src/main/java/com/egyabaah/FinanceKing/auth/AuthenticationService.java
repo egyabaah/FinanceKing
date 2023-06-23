@@ -1,8 +1,8 @@
 package com.egyabaah.FinanceKing.auth;
 
 
-import com.egyabaah.FinanceKing.accounts.User;
-import com.egyabaah.FinanceKing.accounts.UserRepository;
+import com.egyabaah.FinanceKing.user.User;
+import com.egyabaah.FinanceKing.user.UserRepository;
 import com.egyabaah.FinanceKing.token.Token;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +32,8 @@ public class AuthenticationService {
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
   private final UserDetailsService userDetailsService;
+
+  private User user;
 
 
 //public AuthenticationResponse register(RegisterRequest request) {
@@ -91,9 +93,10 @@ public class AuthenticationService {
       var isTokenValid = tokenRepository.findByToken(jwt)
               .map(t -> !t.isExpired() && !t.isRevoked())
               .orElse(false);
-      System.out.println(authHeader);
+//      System.out.println(authHeader);
       if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
         User user = accountRepo.findByEmail(userEmail).get();
+        this.setUser(user);
 
         var jwtToken = jwtService.generateToken(user);
         saveUserToken(user, jwtToken);
@@ -127,5 +130,13 @@ public class AuthenticationService {
       token.setRevoked(true);
     });
     tokenRepository.saveAll(validUserTokens);
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
   }
 }
