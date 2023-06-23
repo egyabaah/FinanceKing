@@ -3,15 +3,12 @@
  */
 package com.egyabaah.FinanceKing.roles;
 
-import jakarta.persistence.Entity;
+import com.egyabaah.FinanceKing.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author gyabe
@@ -27,18 +24,32 @@ public class Roles {
 	private Long id;
 	
 //	@Column(length = 20)
-//	@Enumerated(EnumType.STRING)
-//	private Role name;
+	@Enumerated(EnumType.STRING)
+	private Role name;
+
+	@ManyToOne
+	@JoinColumn(name="user_id", referencedColumnName = "id")
+	private User user;
 	
-	private String name;
+//	private String name;
 	
 	public Roles() {
 		
 	}
-	
-	public Roles(Role name) {
-		this.name = name.toString();
+
+	public Roles(Role name, User user) {
+		this.name = name;
+		this.user = user;
 	}
+	public Roles(Role name) {
+		this.name = name;
+//		this.user = user;
+	}
+
+
+	//	public Roles(Role name) {
+//		this.name = name.toString();
+//	}
 	
 	public Long getId() {
 		return id;
@@ -48,18 +59,26 @@ public class Roles {
 		this.id = id;
 	}
 	
-//	public Role getName() {
-////		return name;
-//		return Role.ROLE_USER;
-//	}
-	
-	public String getName() {
-//		return name;
+	public Role getName() {
 		return name;
+//		return Role.ROLE_USER;
 	}
 
+	@Override
+	public String toString() {
+		return "Roles{" +
+				"id=" + id +
+				", name=" + name +
+//				", user=" + user +
+				'}';
+	}
+//	public String getName() {
+////		return name;
+//		return name;
+//	}
+
 	public void setName(Role name) {
-		this.name = name.toString();
+		this.name = name;
 	}
 
 	
